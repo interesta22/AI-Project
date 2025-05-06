@@ -1,30 +1,28 @@
-
 import 'package:ai_project/models/node_mpdel.dart';
 
-List<String> bfsWithGoal(Node root, String goal) {
+String bfsWithGoal(Node root, String goal) {
   List<String> result = [];
   Set<String> visited = {};
-  List<Node> queue = [root];  // استخدام قائمة للطابور بدلاً من الخريطة
+  List<Node> queue = [root];
 
-  bool foundGoal = false; // علم لمعرفة إذا تم العثور على الهدف
+  bool foundGoal = false;
 
   while (queue.isNotEmpty && !foundGoal) {
-    Node node = queue.removeAt(0);  // أخذ أول عنصر من الطابور
+    Node node = queue.removeAt(0);
     if (!visited.contains(node.name)) {
       visited.add(node.name);
       result.add(node.name);
 
       if (node.name == goal) {
-        foundGoal = true;  // إذا وجدنا الهدف نوقف البحث
+        foundGoal = true;
       } else {
-        // إضافة الأبناء (الأطفال) إلى الطابور
         if (node.left != null) queue.add(node.left!);
         if (node.right != null) queue.add(node.right!);
       }
     }
   }
 
-  return result;
+  return "Path: ${result.join(' → ')}";
 }
 
 Node buildTree() {
@@ -34,4 +32,3 @@ Node buildTree() {
     right: Node(name: 'C', left: Node(name: 'F'), right: Node(name: 'G')),
   );
 }
-

@@ -1,4 +1,4 @@
-String greedyExample() {
+String greedyExample(String start , String goal ) {
   final Map<String, List<String>> graph = {
     // 'A': ['B', 'C'],
     // 'B': ['D', 'F'],
@@ -49,8 +49,6 @@ String greedyExample() {
   final result = <String>[];
   final queue = <String>[];
 
-  String start = 'A';
-  String goal = 'J';
 
   queue.add(start);
 
@@ -74,5 +72,5 @@ String greedyExample() {
     }
   }
 
-  return result.join(' → ');
+  return 'Path: ${result.reversed.join(' → ')}';
 }

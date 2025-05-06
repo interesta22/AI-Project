@@ -17,29 +17,31 @@ class _HomePageState extends State<HomePage> {
   String result = '';
   String selectedAlgorithm = '';
 
-  void runBFS() {
-    final tree = buildTree();
-    final goal = 'F';
-    final res = bfsWithGoal(tree, goal);
-    setState(() {
-      result = res.join(' → ');
-      selectedAlgorithm = 'BFS';
-    });
-  }
-
   void runDFS() {
     final tree = buildTreeOfDfs();
     final goal = 'F';
     final rightFirst = true;
     final res = dfsWithGoal(tree, goal, rightFirst: rightFirst);
     setState(() {
-      result = res.join(' → ');
+      result = res.first; 
       selectedAlgorithm = 'DFS';
     });
   }
 
+  void runBFS() {
+    final tree = buildTree();
+    final goal = 'F';
+    final res = bfsWithGoal(tree, goal);
+    setState(() {
+      result = res;
+      selectedAlgorithm = 'BFS';
+    });
+  }
+
   void runGreedy() {
-    final res = greedyExample();
+    final String start = 'A';
+    final String goal = 'J';
+    final res = greedyExample(start, goal);
     setState(() {
       result = res;
       selectedAlgorithm = 'Greedy';
@@ -47,7 +49,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void runAStar() {
-    final res = aStarExample();
+    final start = 'A';
+    final goal = 'J';
+    final res = aStarExample(start, goal);
     setState(() {
       result = res;
       selectedAlgorithm = 'A*';
@@ -70,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 10),
             CustomElevatedButton(
-              label: 'Run DFS (Tree)',
+              label: 'Run DFS',
               onPressed: runDFS,
               isSelected: selectedAlgorithm == 'DFS',
             ),
@@ -87,6 +91,7 @@ class _HomePageState extends State<HomePage> {
               isSelected: selectedAlgorithm == 'A*',
             ),
             const SizedBox(height: 20),
+            Center(child: const Text('Result', style: TextStyle(fontSize: 18))),
             ResultBox(result: result),
           ],
         ),

@@ -1,9 +1,4 @@
-String aStarExample() {
-  // خوارزمية A* (A Star)
-  final start = 'A';
-  final goal = 'J';
-
-  // الجراف (graph) مع المسافات (distances)
+String aStarExample(String start, String goal) {
   final graph = {
     'A': {'B': 6, 'C': 3},
     'B': {'E': 2, 'D': 3},
@@ -16,7 +11,6 @@ String aStarExample() {
     'I': {'J': 3},
   };
 
-  // تقدير المسافات من البداية (start) إلى الهدف (goal)
   final heuristic = {
     'A': 10,
     'B': 8,
@@ -30,19 +24,14 @@ String aStarExample() {
     'J': 0,
   };
 
-  // القيم المبدئية
   final gScore = {start: 0};
   final fScore = {start: heuristic[start]};
-
-  // القوائم المساعدة
   final openSet = [start];
   final cameFrom = {};
 
   while (openSet.isNotEmpty) {
-    // اختيار العقدة ذات أقل قيمة fScore
     var current = openSet.reduce((a, b) => fScore[a]! < fScore[b]! ? a : b);
 
-    // إذا وصلنا إلى الهدف
     if (current == goal) {
       List<String> path = [];
       while (cameFrom.containsKey(current)) {
@@ -55,7 +44,6 @@ String aStarExample() {
 
     openSet.remove(current);
 
-    // التحقق من الجيران
     for (var neighbor in graph[current]!.keys) {
       final tentativeGScore = gScore[current]! + graph[current]![neighbor]!;
       if (tentativeGScore < (gScore[neighbor] ?? double.infinity)) {
